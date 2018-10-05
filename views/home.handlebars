@@ -1,0 +1,20 @@
+<div class="todoList">
+    <h1>Fill in your shifts</h1>
+    <form action="/waiter/{{username}}" method="POST">
+    <div class="items">
+        {{#each checklist}}
+        <input id="{{week_day}}" type="checkbox">
+        <label for="{{week_day}}">{{week_day}}</label>
+        {{/each}}
+        <h2 class="done">WORKING</h2>
+        <h2 class="pending">Pending</h2>
+    </div>
+    <button type="submit" name="selectDays">submit</button>
+    </form>
+
+        {{#if messages.error}}
+        <div class='error'>
+            <h4>{{messages.error}}</h4>
+        </div>
+        {{/if}}
+</div>
