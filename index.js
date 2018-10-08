@@ -48,10 +48,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: false
 }));
-
-app.get('/waiter/:username', routes.gettingWaiterDays);
+app.get('/waiter/:username', routes.home)
+app.post('/waiter/:username', routes.gettingWaiterDays);
 app.get('/', routes.logging);
 app.get('/owner', routes.owner);
+app.get('/clear', routes.clearDataBaseWaiter);
 
 
 app.use(express.static('public'));
