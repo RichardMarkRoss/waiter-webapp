@@ -25,11 +25,9 @@ const pool = new Pool({
     ssl: useSSL
 });
 
-
-const waiterAppFactory = factoryFunction(pool)
+const waiterAppFactory = factoryFunction(pool);
 // const waiterDataFunction = dataFunction(waiterAppFactory);
 const routes = waiterRoutes(waiterAppFactory);
-
 
 app.use(session({
     secret: '<add a secret string here>',
@@ -41,19 +39,18 @@ app.engine('handlebars', exphbs({
     defaultLayout: 'main'
 }));
 app.set('view engine', 'handlebars');
-app.use(flash())
+app.use(flash());
 
 app.use(bodyParser.json());
 
 app.use(bodyParser.urlencoded({
     extended: false
 }));
-app.get('/waiter/:username', routes.home)
+app.get('/waiter/:username', routes.home);
 app.post('/waiter/:username', routes.gettingWaiterDays);
 app.get('/', routes.logging);
 app.get('/owner', routes.owner);
 app.get('/clear', routes.clearDataBaseWaiter);
-
 
 app.use(express.static('public'));
 let PORT = process.env.PORT || 4020;
