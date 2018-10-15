@@ -36,7 +36,13 @@ app.use(session({
 }));
 
 app.engine('handlebars', exphbs({
-    defaultLayout: 'main'
+    defaultLayout: 'main',
+
+    // helper:'checked' {
+    //     function() {
+
+    //     }
+    // }
 }));
 app.set('view engine', 'handlebars');
 app.use(flash());

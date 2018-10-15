@@ -23,14 +23,31 @@ const theWaiterFac = factory(pool);
 describe('the greetings function basic test', function () {
 
     beforeEach(async function () {
-       // await pool.query('delete from hold_name');
+        await pool.query('delete from shifts');
+        await pool.query('delete from waiters');
     });
- it('test the counter if had to have one name inside of it', async function () {
-    let days = await theWaiterFac.getAllWeekDays();
-     assert.strictEqual(days.length, 7);
- });
 
-        after(function () {
+    it('test should not display the same name twice', async function () {
+        
+        const findUserCountSQL = 'select count(*) from waiters where waiter_name = $1';
+        let userCountResults = await pool.query(findUserCountSQL, ['andre']);
+
+        assert.equal(0, userCountResults.rows[0].count);
+
+        await theWaiterFac.insertWaiter('andre');
+        await theWaiterFac.insertWaiter('andre');
+        
+        userCountResults = await pool.query(findUserCountSQL, ['andre']);
+        assert.equal(1, userCountResults.rows[0].count);
+
+    });
+
+    it('test the counter if had to have one name inside of it', async function () {
+        let days = await theWaiterFac.getAllWeekDays();
+        assert.strictEqual(days.length, 7);
+    });
+
+    after(function () {
         pool.end();
     });
 });

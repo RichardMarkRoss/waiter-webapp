@@ -3,7 +3,7 @@
     <form action="/waiter/{{username}}" method="POST">
     <div class="items">
         {{#each checklist}}
-        <input id="{{week_day}}" name="day_id" value="{{id}}" type="checkbox">
+        <input id="{{week_day}}" name="day_id" value="{{id}}" type="checkbox" {{checked}}>
         <label for="{{week_day}}">{{week_day}}</label>
         {{/each}}
         <h2 class="done">WORKING DAYS</h2>

@@ -13,6 +13,7 @@
     "express-handlebars": "^3.0.0",
     "express-session": "^1.15.6",
     "flash": "^1.1.0",
+    "helper-js": "^1.2.1",
     "node": "^10.11.0",
     "nodemon": "^1.18.4",
     "nyc": "^13.0.1",

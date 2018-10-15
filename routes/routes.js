@@ -1,7 +1,7 @@
 module.exports = function (waiterAppFactory) {
     async function home (req, res) {
         const username = req.params.username;
-        const checklist = await waiterAppFactory.getAllWeekDays();
+        const checklist = await waiterAppFactory.getAllWeekDays(username);
         res.render('home', {
             checklist,
             username
