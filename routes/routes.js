@@ -20,20 +20,41 @@ module.exports = function (waiterAppFactory) {
         });
     }
     async function owner (req, res) {
+
         res.render('owner', {});
     }
     async function clearDataBaseWaiter (req, res) {
         await waiterAppFactory.clearDayValues();
         res.render('owner', {});
     }
-    async function logging (req, res) {
+
+    function login (req, res) {
+        const owner = req.body.ownerId;
+        const waiter = req.body.waiterId;
+        console.log(owner);
+        console.log(waiter);
+
+        if (owner !== '') {
+          return res.render('./owner');
+        };
+        if (waiter !== '') {
+            return res.redirect('/waiter/' + waiter);
+        };
+        if(waiter === '' && owner === '') {
+            req.flash('error', 'please insert a waiter name or owner sign in');
+            res.render('log');
+        }
+    }
+
+    function index (req, res) {
         res.render('log');
     }
     return {
         gettingWaiterDays,
-        logging,
+        login,
         owner,
         clearDataBaseWaiter,
-        home
+        home,
+        index
     };
 };

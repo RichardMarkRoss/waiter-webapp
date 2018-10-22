@@ -1,15 +1,28 @@
 module.exports = function (pool) {
-    async function getAllWeekDays(username) {
+    async function getAllWeekDays (username) {
         const day = await pool.query('select id, week_day from weekdays');
         const holdDays = day.rows;
-        // get the days the user is working for...
 
-        // mark each day the user is working in holdDays - checked = 'checked' if not checked = '';
+        let daysChosen = await pool.query(`select waiter_name, week_day, checked from shifts 
+         join waiters on waiters.id = shifts.waiter_id 
+         join weekdays on weekdays.id = shifts.day_id
+         where waiter_name = $1;`, [username]);
 
+        // console.log(daysChosen);
         return holdDays;
+        // ᕕ(⌐■_■)ᕗ ♪♬
     }
 
-    async function insertWaiter(username) {
+    async function getAllShifts () {
+        let allShifts = await pool.query(`
+        select waiter_name, week_day, checked from shifts
+        join waiters on waiters.id = shifts.waiter_id
+        join weekdays on weekdays.id = shifts.day_id;
+        `);
+        console.log(allShifts);
+    }
+
+    async function insertWaiter (username) {
         const addWaiterName = await pool.query('select id from waiters where waiter_name = $1', [username]);
         // console.log(addWaiterName.rows[0].id);
         if (addWaiterName.rows.length === 0) {
@@ -17,7 +30,7 @@ module.exports = function (pool) {
         }
     }
 
-    async function daysPassed(daysID, username) {
+    async function daysPassed (daysID, username) {
         // console.log(daysID);
 
         let waiterData = await pool.query('select id from waiters where waiter_name = $1', [username]);
@@ -32,9 +45,7 @@ module.exports = function (pool) {
         }
     }
 
-
-
-    async function clearDayValues() {
+    async function clearDayValues () {
         await pool.query('delete from shifts');
         await pool.query('ALTER SEQUENCE shifts_id_seq RESTART WITH 1;');
         await pool.query('delete from waiters');
@@ -45,11 +56,12 @@ module.exports = function (pool) {
         getAllWeekDays,
         insertWaiter,
         clearDayValues,
-        daysPassed
+        daysPassed,
+        getAllShifts
     };
 };
 
-// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ later use ++++++++++++++++++++++++++++++++++++++++++++++++++++
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ notes ++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 // async function daysChecked(checked) {
 //     const daysSelected = await pool.query('select week_day from weekday where week_day = $1', [checked]);
@@ -57,3 +69,6 @@ module.exports = function (pool) {
 // };
 
 // await pool.query(' SELECT waiter_name FROM waiters.columns WHERE waiter_name = $1 THEN ALTER TABLE waiters DROP IF EXISTS waiter_name', [username]);
+
+// join statement example (not working just needed for understanding structure).
+// ('select towns_names, plates from towns join number_plates on towns.id = number_plates.towns_id where towns_names = $1 ', [plate]);

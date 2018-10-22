@@ -26,7 +26,6 @@ const pool = new Pool({
 });
 
 const waiterAppFactory = factoryFunction(pool);
-// const waiterDataFunction = dataFunction(waiterAppFactory);
 const routes = waiterRoutes(waiterAppFactory);
 
 app.use(session({
@@ -36,13 +35,7 @@ app.use(session({
 }));
 
 app.engine('handlebars', exphbs({
-    defaultLayout: 'main',
-
-    // helper:'checked' {
-    //     function() {
-
-    //     }
-    // }
+    defaultLayout: 'main'
 }));
 app.set('view engine', 'handlebars');
 app.use(flash());
@@ -54,7 +47,8 @@ app.use(bodyParser.urlencoded({
 }));
 app.get('/waiter/:username', routes.home);
 app.post('/waiter/:username', routes.gettingWaiterDays);
-app.get('/', routes.logging);
+app.post('/login', routes.login);
+app.get('/', routes.index);
 app.get('/owner', routes.owner);
 app.get('/clear', routes.clearDataBaseWaiter);
 

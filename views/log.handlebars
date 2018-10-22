@@ -1,13 +1,18 @@
 <div class="stand">
     <div class="outer-screen">
         <div class="inner-screen">
-            <form method="/" action="get">
+            <form action="/login" method="POST">
                 <div class="form">
                     <p style="text-align:center">LOG IN</p>
                     <input type="text" class="zocial-dribbble" placeholder="Enter owner name" name="ownerId">
                     <p style="text-align:center">OR</p>
                     <input type="text" class="zocial-dribbble" placeholder="Enter waiter name" name="waiterId">
                     <input type="submit" value="Login">
+                    {{#if messages.error}}
+                    <div class='error'>
+                        <h4>{{messages.error}}</h4>
+                    </div>
+                    {{/if}}
                 </div>
             </form>
         </div>
