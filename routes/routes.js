@@ -20,12 +20,16 @@ module.exports = function (waiterAppFactory) {
         });
     }
     async function owner (req, res) {
-
-        res.render('owner', {});
+        const tableWaiter = await waiterAppFactory.getAllShifts();
+        res.render('owner', {
+            tableWaiter
+        });
     }
     async function clearDataBaseWaiter (req, res) {
         await waiterAppFactory.clearDayValues();
-        res.render('owner', {});
+        res.render('owner', {
+            
+        });
     }
 
     function login (req, res) {

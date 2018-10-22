@@ -19,7 +19,8 @@ module.exports = function (pool) {
         join waiters on waiters.id = shifts.waiter_id
         join weekdays on weekdays.id = shifts.day_id;
         `);
-        console.log(allShifts);
+        const shifts = allShifts.rows;
+        return shifts;
     }
 
     async function insertWaiter (username) {
@@ -35,13 +36,15 @@ module.exports = function (pool) {
 
         let waiterData = await pool.query('select id from waiters where waiter_name = $1', [username]);
         let waiterID = waiterData.rows[0].id;
+        await pool.query('delete from shifts where waiter_id = $1', [waiterID]);
         // console.log(waiterID);
         for (let days of daysID) {
             // console.log(days);
             await pool.query('select id from weekdays where week_day = $1', [days]);
-
+            let marked = 'checked';
             // console.log(dayData); let dayData =
-            await pool.query('insert into shifts(day_id, waiter_id) values($1, $2)', [days, waiterID]);
+
+            await pool.query('insert into shifts(day_id, waiter_id, checked) values($1, $2, $3)', [days, waiterID, marked]);
         }
     }
 

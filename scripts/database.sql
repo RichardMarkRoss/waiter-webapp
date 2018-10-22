@@ -18,7 +18,7 @@ create table shifts
     id serial not null primary key,
      waiter_id int not null,
      day_id int not null,
-     checked text,
+     checked text not null,
     foreign key (waiter_id) references waiters(id),
     foreign key (day_id) references weekdays(id)
     );

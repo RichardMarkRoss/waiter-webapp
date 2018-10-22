@@ -12,17 +12,17 @@
             </tr>
         </thead>
         <tbody>
-            {{#each waiterList}}
+                {{#each tableWaiter}}
             <tr>
-                <td data-column="Monday" value="Monday" class={{strings}}>{{string}}</td>
-                <td data-column="Tuesday" value="Tuesday" class={{strings}}>{{string}}</td>
-                <td data-column="Wednesday" value="Wednesday" class={{strings}}>{{string}}</td>
-                <td data-column="Thursday" value="Thursday" class={{strings}}>{{string}}</td>
-                <td data-column="Friday" value="Friday" class={{strings}}>{{string}}</td>
-                <td data-column="Saturday" value="Saturday" class={{strings}}>{{string}}</td>
-                <td data-column="Sunday" value="Sunday" class={{strings}}>{{string}}</td>
-            </tr>
-            {{/each}}
+            <td data-column={{week_day}} value={{week_day}} class={{checked}}>{{waiter_name}}</td>
+            <td data-column={{week_day}} value={{week_day}} class={{checked}}>{{waiter_name}}</td>
+            <td data-column={{week_day}} value={{week_day}} class={{checked}}>{{waiter_name}}</td>
+            <td data-column={{week_day}} value={{week_day}} class={{checked}}>{{waiter_name}}</td>
+            <td data-column={{week_day}} value={{week_day}} class={{checked}}>{{waiter_name}}</td>
+            <td data-column={{week_day}} value={{week_day}} class={{checked}}>{{waiter_name}}</td>
+            <td data-column={{week_day}} value={{week_day}} class={{checked}}>{{waiter_name}}</td>
+                </tr>
+                {{/each}}
         </tbody>
     </table>
 </div>
