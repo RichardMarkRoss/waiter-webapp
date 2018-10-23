@@ -1,5 +1,5 @@
 module.exports = function (pool) {
-    async function getAllWeekDays (username) {
+    async function getAllWeekDays(username) {
         const day = await pool.query('select id, week_day from weekdays');
         const holdDays = day.rows;
 
@@ -8,22 +8,29 @@ module.exports = function (pool) {
          join weekdays on weekdays.id = shifts.day_id
          where waiter_name = $1;`, [username]);
 
-        // console.log(daysChosen);
+        console.log(daysChosen);
         return holdDays;
         // ᕕ(⌐■_■)ᕗ ♪♬
     }
 
-    async function getAllShifts () {
+    async function getAllShifts() {
         let allShifts = await pool.query(`
         select waiter_name, week_day, checked from shifts
         join waiters on waiters.id = shifts.waiter_id
         join weekdays on weekdays.id = shifts.day_id;
         `);
-        const shifts = allShifts.rows;
-        return shifts;
+        const theShifts = allShifts.rows;
+        // create a for loop for the waiter to insert into table to the days...else empty string.
+        // for (let shifts of theShifts) {
+        if (theShifts !== '') {
+            return theShifts;
+        } else {
+            return '';
+        }
+        // }
     }
 
-    async function insertWaiter (username) {
+    async function insertWaiter(username) {
         const addWaiterName = await pool.query('select id from waiters where waiter_name = $1', [username]);
         // console.log(addWaiterName.rows[0].id);
         if (addWaiterName.rows.length === 0) {
@@ -31,7 +38,7 @@ module.exports = function (pool) {
         }
     }
 
-    async function daysPassed (daysID, username) {
+    async function daysPassed(daysID, username) {
         // console.log(daysID);
 
         let waiterData = await pool.query('select id from waiters where waiter_name = $1', [username]);
@@ -48,7 +55,7 @@ module.exports = function (pool) {
         }
     }
 
-    async function clearDayValues () {
+    async function clearDayValues() {
         await pool.query('delete from shifts');
         await pool.query('ALTER SEQUENCE shifts_id_seq RESTART WITH 1;');
         await pool.query('delete from waiters');

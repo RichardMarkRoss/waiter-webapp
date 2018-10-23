@@ -28,7 +28,7 @@ module.exports = function (waiterAppFactory) {
     async function clearDataBaseWaiter (req, res) {
         await waiterAppFactory.clearDayValues();
         res.render('owner', {
-            
+
         });
     }
 
@@ -39,12 +39,12 @@ module.exports = function (waiterAppFactory) {
         console.log(waiter);
 
         if (owner !== '') {
-          return res.render('./owner');
+            return res.redirect('./owner');
         };
         if (waiter !== '') {
             return res.redirect('/waiter/' + waiter);
         };
-        if(waiter === '' && owner === '') {
+        if (waiter === '' && owner === '') {
             req.flash('error', 'please insert a waiter name or owner sign in');
             res.render('log');
         }
