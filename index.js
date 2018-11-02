@@ -57,5 +57,5 @@ app.use(express.static('public'));
 let PORT = process.env.PORT || 4020;
 
 app.listen(PORT, function () {
-    console.log('App starting port', PORT);
+    console.log('App starting port'+PORT);
 });

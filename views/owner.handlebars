@@ -2,23 +2,31 @@
     <table>
         <thead>
             <tr>
-                <th>Monday</th>
-                <th>Tuesday</th>
-                <th>Wednesday</th>
-                <th>Thursday</th>
-                <th>Friday</th>
-                <th>Saturday</th>
-                <th>Sunday</th>
-            </tr>
-        </thead>
-        <tbody>
-                {{#each tableWaiter}}
-            <tr>
-            <td data-column={{week_day}} value={{week_day}} class={{checked}}>{{waiter_name}}</td>
-                </tr>
+                {{#each checklist}}
+                <th>{{week_day}}</th>
                 {{/each}}
+            </tr>
+
+        </thead>
+
+        <tbody>
+            <tr>
+                {{#each checklist}}
+                <td data-column={{week_day}} class="{{checked}}" value={{week_day}}>
+                <ul>
+                    {{#each tableWaiter}}
+                    <li>
+                        {{shift}}
+                    </li>
+                    {{/each}}
+                </ul>
+
+                </td>
+                {{/each}}
+            </tr>
         </tbody>
     </table>
+
 </div>
 <div class=''>
     <form action="/clear" method="GET">

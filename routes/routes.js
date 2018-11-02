@@ -21,8 +21,10 @@ module.exports = function (waiterAppFactory) {
     }
     async function owner (req, res) {
         const tableWaiter = await waiterAppFactory.getAllShifts();
+        const checklist = await waiterAppFactory.getAllWeekDays();
         res.render('owner', {
-            tableWaiter
+            tableWaiter,
+            checklist
         });
     }
     async function clearDataBaseWaiter (req, res) {
