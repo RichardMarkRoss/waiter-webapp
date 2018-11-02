@@ -10,35 +10,51 @@ module.exports = function (pool) {
         // console.log(daysChosen);
         return holdDays;
     }
+    async function getAllWaiters(username) {
+        let daysChosen = await pool.query(`select waiter_name, week_day, checked from shifts 
+         join waiters on waiters.id = shifts.waiter_id 
+         join weekdays on weekdays.id = shifts.day_id
+         where weekdays.week_day = $1;
+         `, [username]);
+        const waiterNameFilter = daysChosen.rows;
+        return waiterNameFilter;
+    }
 
     async function getAllShifts() {
         let weekDays = await getAllWeekDays();
         let allShifts = await pool.query(`
-        select waiter_name, week_day from shifts
+        select waiter_name from shifts
         join waiters on waiters.id = shifts.waiter_id
         join weekdays on weekdays.id = shifts.day_id
         `);
         const shifts = allShifts.rows;
-        console.log(shifts)
+
+        // console.log(shifts);
         let shiftList = [];
 
+        // loop through all the days
         for (let i = 0; weekDays.length; i++) {
             let day = weekDays[i];
-            console.log(day);
-            shiftList.push({
+            // console.log(day);
+            let currentDay = {
                 week_day: day.week_day,
                 shift: []
-            });
-            // console.log(shiftList);
-            for (let i = 0; shifts.length; i++) {
-                let shiftIndex = shifts[i];
-                console.log(shiftIndex);
-                shiftList.shift.push(shiftIndex.waiter_name);
-            }
+            };
+            console.log(currentDay.week_day);
+            // console.log(currentDay);
+            // find all the waiters working on this day
+            let waiterNames = await getAllWaiters(day.week_day);
+            // for (let i = 0; waiterNames.length; i++) {
+            currentDay.shift = waiterNames;
+            //     let shiftIndex = shifts[i];
+            //     console.log(shiftIndex);
+            //     shiftList.shift.push(shiftIndex.waiter_name);
+            // }
+            // console.log(waiterNames);
+            shiftList = currentDay;
         }
-        console.log(shiftList);
+        console.log(shiftList)
         return shiftList;
-
         // for (let days of weekDays) {
         //     // shiftList.push({
         //     //     week_day: days.week_day,
