@@ -50,7 +50,7 @@ app.get('/waiter/:username', routes.home);
 app.post('/waiter/:username', routes.gettingWaiterDays);
 app.post('/login', routes.login);
 app.get('/', routes.index);
-app.get('/owner', routes.owner);
+app.get('/shifts', routes.owner);
 app.get('/clear', routes.clearDataBaseWaiter);
 
 app.use(express.static('public'));

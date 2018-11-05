@@ -2,7 +2,7 @@
     <table>
         <thead>
             <tr>
-                {{#each checklist}}
+                {{#each shifts}}
                 <th>{{week_day}}</th>
                 {{/each}}
             </tr>
@@ -11,16 +11,16 @@
 
         <tbody>
             <tr>
-                {{#each checklist}}
+                {{#each shifts}}
                 <td data-column={{week_day}} class="{{checked}}" value={{week_day}}>
-                <ul>
-                    {{#each tableWaiter}}
-                    <li>
-                        {{shift}}
-                    </li>
-                    {{/each}}
-                </ul>
+                    <ul>
+                        {{#each users}}
+                        <li>
 
+                            {{waiter}}
+                        </li>
+                            {{/each}}
+                    </ul>
                 </td>
                 {{/each}}
             </tr>

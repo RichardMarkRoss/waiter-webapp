@@ -20,13 +20,18 @@ module.exports = function (waiterAppFactory) {
         });
     }
     async function owner (req, res) {
-        const tableWaiter = await waiterAppFactory.getAllShifts();
-        const checklist = await waiterAppFactory.getAllWeekDays();
+        // let waiter = await waiterAppFactory.getAllWaiters();
+        let shifts = await waiterAppFactory.displayShifts();
+
+        // console.log(shifts);
+
+        await waiterAppFactory.displayShifts;
         res.render('owner', {
-            tableWaiter,
-            checklist
+            shifts
+
         });
     }
+
     async function clearDataBaseWaiter (req, res) {
         await waiterAppFactory.clearDayValues();
         res.render('owner', {
@@ -41,7 +46,7 @@ module.exports = function (waiterAppFactory) {
         console.log(waiter);
 
         if (owner !== '') {
-            return res.redirect('./owner');
+            return res.redirect('./shifts');
         };
         if (waiter !== '') {
             return res.redirect('/waiter/' + waiter);
@@ -55,6 +60,7 @@ module.exports = function (waiterAppFactory) {
     function index (req, res) {
         res.render('log');
     }
+
     return {
         gettingWaiterDays,
         login,
