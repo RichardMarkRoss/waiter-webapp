@@ -6,7 +6,7 @@ module.exports = function (pool) {
          join waiters on waiters.id = shifts.waiter_id 
          join weekdays on weekdays.id = shifts.day_id
          where waiter_name = $1;`, [username]);
-        // console.log(daysChosen);
+        console.log(daysChosen);
         return holdDays;
     }
     async function getAllWaiters (username) {
@@ -16,7 +16,7 @@ module.exports = function (pool) {
          where weekdays.week_day = $1;
          `, [username]);
         const waiterNameFilter = daysChosen.rows;
-        
+
         return waiterNameFilter;
     }
 
@@ -38,7 +38,7 @@ module.exports = function (pool) {
             Inner JOIN weekdays
             on shifts.day_id = weekdays.id where weekdays.id = $1`, [weeks.id]);
             weeks.users = getWorkDays.rows;
-            console.log(weeks.users);
+            // console.log(weeks.users);
             if (weeks.users.length === 0) {
                 weeks.marked = 'nothing';
             }
@@ -55,6 +55,21 @@ module.exports = function (pool) {
         return match;
     }
 
+    async function matchCheckDays (username) {
+        let checker = await getDay();
+        let waiter = await getAllWaiters(username);
+
+        for (let waiterNames of waiter) {
+            for (let weekdays of checker) {
+                if (waiterNames.week_days === weekdays.week_days) {
+                    weekdays.checked = 'checked';
+                } else if (weekdays.checked) {
+                    weekdays.color = 'color';
+                }
+            }
+        }
+        return checker;
+    }
 
     async function daysPassed (daysID, username) {
         let waiterData = await pool.query('select id from waiters where waiter_name = $1', [username]);
@@ -63,7 +78,7 @@ module.exports = function (pool) {
         for (let days of daysID) {
             await pool.query('select id from weekdays where week_day = $1', [days]);
 
-            await pool.query('insert into shifts(day_id, waiter_id, checked) values($1, $2, $3)', [days, waiterID]);
+            await pool.query('insert into shifts(day_id, waiter_id) values($1, $2)', [days, waiterID]);
         }
     }
 
@@ -86,6 +101,7 @@ module.exports = function (pool) {
         daysPassed,
         displayShifts,
         getDay,
-        getAllWaiters
+        getAllWaiters,
+        matchCheckDays
     };
 };

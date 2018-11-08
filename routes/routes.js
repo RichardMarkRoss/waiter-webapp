@@ -9,16 +9,20 @@ module.exports = function (waiterAppFactory) {
     }
     async function gettingWaiterDays (req, res) {
         const username = req.params.username;
+        console.log(username);
         const daysID = req.body.day_id;
-        // console.log(daysID);
+        console.log(daysID);
+        const match = await waiterAppFactory.matchCheckDays(username);
         await waiterAppFactory.insertWaiter(username);
         await waiterAppFactory.daysPassed(daysID, username);
         const checklist = await waiterAppFactory.getAllWeekDays();
         res.render('home', {
             checklist,
-            username
+            username,
+            match
         });
     }
+
     async function owner (req, res) {
         // let waiter = await waiterAppFactory.getAllWaiters();
         let shifts = await waiterAppFactory.displayShifts();
