@@ -28,7 +28,6 @@ const pool = new Pool({
 const waiterAppFactory = factoryFunction(pool);
 const routes = waiterRoutes(waiterAppFactory);
 
-
 app.use(session({
     secret: '<add a secret string here>',
     resave: false,

@@ -1,14 +1,14 @@
 language: node_js
 
 env:
-     - DATABASE_URL=postgresql://coder:pg123@localhost:5432/waiter_app
+     - DATABASE_URL=postgresql://postgresql@localhost:5432/waiter_app
 
 node_js:
   - "v8.9.4"
 
 before_script:
-  - psql -c 'create database  waiter-app;' -U postgres
-  - psql -U postgres -d waiter-app -a -f database.sql
+  - psql -c 'create database waiter-app;' -U postgres
+  - psql -U postgres -d waiter-app -a -f ./script/database.sql
   
 addons:
     apt:
