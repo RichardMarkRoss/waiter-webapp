@@ -21,7 +21,7 @@ const pool = new Pool({
 const theWaiterFac = factory(pool);
 
 describe('the greetings function basic test', function () {
-    beforeEach(async function () {
+    beforeEach (async function () {
         await pool.query('delete from shifts');
         await pool.query('delete from waiters');
     });
@@ -58,7 +58,7 @@ describe('the greetings function basic test', function () {
         assert.strictEqual(days.length, 0);
     });
 
-    after(function () {
+    after (function () {
         pool.end();
     });
 });
