@@ -1,6 +1,5 @@
 let assert = require('assert');
 let factory = require('../waiter-function');
-// let data = require('../greetingsDataFunction');
 const pg = require('pg');
 const Pool = pg.Pool;
 
