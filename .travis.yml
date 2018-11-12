@@ -1,7 +1,7 @@
 language: node_js
 
 env:
-     - DATABASE_URL=postgresql://postgresql@localhost:5432/waiter_app
+     - DATABASE_URL=postgresql://coder:pg123@localhost:5432/waiter_app
 
 node_js:
   - "v8.9.4"
