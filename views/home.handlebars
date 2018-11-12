@@ -3,8 +3,10 @@
     <form action="/waiter/{{username}}" method="POST">
     <div class="items">
         {{#each checklist}}
-        <input id="{{week_day}}" name="day_id" value="{{id}}" type="checkbox" {{match}}>
+        {{!-- {{#each match}} --}}
+        <input id="{{week_day}}" name="day_id" value="{{id}}" type="checkbox" {{marked}}>
         <label for="{{week_day}}">{{week_day}}</label>
+        {{!-- {{/each}} --}}
         {{/each}}
         <h2 class="done">WORKING DAYS</h2>
         <h2 class="pending">OFF DAYS</h2>

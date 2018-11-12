@@ -6,17 +6,17 @@ module.exports = function (pool) {
          join waiters on waiters.id = shifts.waiter_id 
          join weekdays on weekdays.id = shifts.day_id
          where waiter_name = $1;`, [username]);
-        console.log(daysChosen);
+        // console.log(daysChosen);
         return holdDays;
     }
     async function getAllWaiters (username) {
-        let daysChosen = await pool.query(`select waiter_name, week_day from shifts 
+        let daysChosen = await pool.query(`select week_day from shifts 
          join waiters on waiters.id = shifts.waiter_id 
          join weekdays on weekdays.id = shifts.day_id
-         where weekdays.week_day = $1;
+         where waiters.waiter_name = $1;
          `, [username]);
         const waiterNameFilter = daysChosen.rows;
-
+        // console.log(waiterNameFilter);
         return waiterNameFilter;
     }
 
@@ -27,7 +27,7 @@ module.exports = function (pool) {
         }
     }
 
-    async function displayShifts () {
+    async function displayShifts (username) {
         let match = await getDay();
 
         for (let weeks of match) {
@@ -38,7 +38,7 @@ module.exports = function (pool) {
             Inner JOIN weekdays
             on shifts.day_id = weekdays.id where weekdays.id = $1`, [weeks.id]);
             weeks.users = getWorkDays.rows;
-            // console.log(weeks.users);
+
             if (weeks.users.length === 0) {
                 weeks.marked = 'nothing';
             }
@@ -51,25 +51,28 @@ module.exports = function (pool) {
                 weeks.checked = 'green';
             }
         };
-        console.log(match);
+        // console.log(match);
         return match;
     }
 
     async function matchCheckDays (username) {
         let checker = await getDay();
         let waiter = await getAllWaiters(username);
-
-        for (let waiterNames of waiter) {
-            for (let weekdays of checker) {
-                if (waiterNames.week_days === weekdays.week_days) {
-                    weekdays.checked = 'checked';
-                } else if (weekdays.checked) {
-                    weekdays.color = 'color';
+        for (let weekdays of checker) {
+            for (let waiterNames of waiter) {
+                if (weekdays.week_day === waiterNames.week_day) {
+                    weekdays.marked = 'checked';
+                    // weekdays.marked;
+                    // console.log(marked);
+                    
                 }
             }
         }
+        console.log(checker);
+        
         return checker;
     }
+    // console.log(matchCheckDays('greg'));
 
     async function daysPassed (daysID, username) {
         let waiterData = await pool.query('select id from waiters where waiter_name = $1', [username]);
