@@ -49,20 +49,13 @@ describe('the greetings function basic test', function () {
 
         await theWaiterFac.insertWaiter('greg');
 
-
-        // let waiterId = await pool.query('select id from waiters where waiter_name = $1',['andre'])
-
-        let dayId = await pool.query('select id from weekdays where week_day = $1', ['Monday']);
-
         await theWaiterFac.daysPassed([1, 2, 5], 'andre');
         await theWaiterFac.daysPassed([2, 4, 6], 'greg');
 
 
-        let days = await theWaiterFac.getAllShifts();
+        let days = await theWaiterFac.getAllWaiters();
 
-        console.log(days);
-
-        // assert.strictEqual(days.length, 7);
+        assert.strictEqual(days.length, 0);
     });
 
     after(function () {
