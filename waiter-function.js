@@ -63,30 +63,29 @@ module.exports = function (pool) {
                 if (weekdays.week_day === waiterNames.week_day) {
                     weekdays.marked = 'checked';
                     // weekdays.marked;
-                    // console.log(weekdays.marked);   
+                    // console.log(weekdays.marked);
                 }
             }
         }
-        console.log(checker);
-        
+
         return checker;
     }
     // console.log(matchCheckDays('greg'));
 
     async function daysPassed (daysID, username) {
-        console.log(daysID);
+        // console.log(daysID);
         let waiterData = await pool.query('select id from waiters where waiter_name = $1', [username]);
         let waiterID = waiterData.rows[0].id;
         await pool.query('delete from shifts where waiter_id = $1', [waiterID]);
         for (let days of daysID) {
-            await pool.query('select id from weekdays where week_day = $1', [days]);
-
+            await pool.query('select id from weekdays where week_day = $1', [days]);s
             await pool.query('insert into shifts(day_id, waiter_id) values($1, $2)', [days, waiterID]);
         }
     }
 
     async function getDay () {
         let result = await pool.query('select * from weekdays');
+        console.log(result.rows);
         return result.rows;
     }
 
