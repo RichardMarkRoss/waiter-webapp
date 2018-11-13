@@ -19,8 +19,8 @@ const pool = new Pool({
 // const theGreetingsData = data(pool);
 const theWaiterFac = factory(pool);
 
-describe('the greetings function basic test', function () {
-    beforeEach (async function () {
+describe('the waiter function basic test', function () {
+    beforeEach(async function () {
         await pool.query('delete from shifts');
         await pool.query('delete from waiters');
     });
@@ -51,13 +51,12 @@ describe('the greetings function basic test', function () {
         await theWaiterFac.daysPassed([1, 2, 5], 'andre');
         await theWaiterFac.daysPassed([2, 4, 6], 'greg');
 
-
         let days = await theWaiterFac.getAllWaiters();
 
         assert.strictEqual(days.length, 0);
     });
 
-    after (function () {
+    after(function () {
         pool.end();
     });
 });
