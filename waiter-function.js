@@ -63,7 +63,7 @@ module.exports = function (pool) {
                 if (weekdays.week_day === waiterNames.week_day) {
                     weekdays.marked = 'checked';
                     // weekdays.marked;
-                    // console.log(marked);
+                    // console.log(weekdays.marked);
                     
                 }
             }

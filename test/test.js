@@ -55,6 +55,38 @@ describe('the waiter function basic test', function () {
 
         assert.strictEqual(days.length, 0);
     });
+    it('should display all the shift from the user', async function () {
+        let waiter = await theWaiterFac.matchCheckDays('andre');
+        assert.deepEqual(waiter, [{
+            id: 1,
+            week_day: 'Monday'
+        },
+        {
+            id: 2,
+            week_day: 'Tuesday'
+        },
+        {
+            id: 3,
+            week_day: 'Wednesday'
+        },
+        {
+            id: 4,
+            week_day: 'Thursday'
+        },
+        {
+            id: 5,
+            week_day: 'Friday'
+        },
+        {
+            id: 6,
+            week_day: 'Saturday'
+        },
+        {
+            id: 7,
+            week_day: 'Sunday'
+        }
+        ]);
+    });
 
     after(function () {
         pool.end();
