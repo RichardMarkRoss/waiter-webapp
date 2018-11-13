@@ -78,7 +78,7 @@ module.exports = function (pool) {
         let waiterID = waiterData.rows[0].id;
         await pool.query('delete from shifts where waiter_id = $1', [waiterID]);
         for (let days of daysID) {
-            await pool.query('select id from weekdays where week_day = $1', [days]);s
+            await pool.query('select id from weekdays where week_day = $1', [days]);
             await pool.query('insert into shifts(day_id, waiter_id) values($1, $2)', [days, waiterID]);
         }
     }
