@@ -20,6 +20,9 @@ body {
     background-image: -webkit-linear-gradient(120deg, #e6f0fc, #bde5d1);
     background-image: linear-gradient(-30deg, #e6f0fc, #bde5d1);
 }
+li{
+    list-style: none;
+}
 
 .todoList {
     -moz-box-shadow: 0 4px 16px #aaa;
