@@ -1,12 +1,11 @@
 module.exports = function (waiterAppFactory) {
     async function home (req, res) {
         const username = req.params.username;
-        const checklist = await waiterAppFactory.getAllWeekDays(username);
-        const match = await waiterAppFactory.matchCheckDays(username);
+        // const checklist = await waiterAppFactory.getAllWeekDays(username);
+        const checklist = await waiterAppFactory.matchCheckDays(username);
         res.render('home', {
             checklist,
-            username,
-            match
+            username
         });
     }
     async function gettingWaiterDays (req, res) {
@@ -22,8 +21,6 @@ module.exports = function (waiterAppFactory) {
         res.render('home', {
             checklist,
             username
-            // ,
-            // match
         });
     }
 
