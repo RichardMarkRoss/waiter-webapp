@@ -38,7 +38,7 @@ describe('the waiter function basic test', function () {
         assert.equal(1, userCountResults.rows[0].count);
     });
 
-    it('test the counter if had to have one name inside of it', async function () {
+    it('test the list if had to have one name inside of it', async function () {
         let days = await theWaiterFac.getAllWeekDays();
         assert.strictEqual(days.length, 7);
     });
@@ -46,46 +46,25 @@ describe('the waiter function basic test', function () {
     it('Should render a list of shifts with a day and a name', async function () {
         await theWaiterFac.insertWaiter('andre');
 
-        await theWaiterFac.insertWaiter('greg');
-
         await theWaiterFac.daysPassed([1, 2, 5], 'andre');
-        await theWaiterFac.daysPassed([2, 4, 6], 'greg');
 
         let days = await theWaiterFac.getAllWaiters();
 
         assert.strictEqual(days.length, 0);
     });
-    it('should display all the shift from the user', async function () {
+    it('should display all the shift that render on the home page', async function () {
         let waiter = await theWaiterFac.matchCheckDays('andre');
-        assert.deepEqual(waiter, [{
-            id: 1,
-            week_day: 'Monday'
-        },
-        {
-            id: 2,
-            week_day: 'Tuesday'
-        },
-        {
-            id: 3,
-            week_day: 'Wednesday'
-        },
-        {
-            id: 4,
-            week_day: 'Thursday'
-        },
-        {
-            id: 5,
-            week_day: 'Friday'
-        },
-        {
-            id: 6,
-            week_day: 'Saturday'
-        },
-        {
-            id: 7,
-            week_day: 'Sunday'
-        }
-        ]);
+        assert.deepEqual(waiter,
+
+            [{ id: 1, week_day: 'Monday' },
+                { id: 2, week_day: 'Tuesday' },
+                { id: 3, week_day: 'Wednesday' },
+                { id: 4, week_day: 'Thursday' },
+                { id: 5, week_day: 'Friday' },
+                { id: 6, week_day: 'Saturday' },
+                { id: 7, week_day: 'Sunday' }
+            ]
+        );
     });
 
     after(function () {

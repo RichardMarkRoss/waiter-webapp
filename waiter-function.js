@@ -63,8 +63,7 @@ module.exports = function (pool) {
                 if (weekdays.week_day === waiterNames.week_day) {
                     weekdays.marked = 'checked';
                     // weekdays.marked;
-                    // console.log(weekdays.marked);
-                    
+                    // console.log(weekdays.marked);   
                 }
             }
         }
@@ -75,6 +74,7 @@ module.exports = function (pool) {
     // console.log(matchCheckDays('greg'));
 
     async function daysPassed (daysID, username) {
+        console.log(daysID);
         let waiterData = await pool.query('select id from waiters where waiter_name = $1', [username]);
         let waiterID = waiterData.rows[0].id;
         await pool.query('delete from shifts where waiter_id = $1', [waiterID]);
