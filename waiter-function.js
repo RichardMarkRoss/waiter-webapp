@@ -6,7 +6,6 @@ module.exports = function (pool) {
          join waiters on waiters.id = shifts.waiter_id 
          join weekdays on weekdays.id = shifts.day_id
          where waiter_name = $1;`, [username]);
-        // console.log(daysChosen);
         return holdDays;
     }
     async function getAllWaiters (username) {
